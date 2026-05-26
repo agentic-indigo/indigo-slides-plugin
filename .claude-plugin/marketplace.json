@@ -1,0 +1,26 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "indigo-slides",
+  "description": "Crea presentazioni professionali con il design system di indigo.ai direttamente da Claude. Editor visuale, condivisione via link, brand cliente opzionale.",
+  "owner": {
+    "name": "indigo.ai",
+    "url": "https://indigo.ai"
+  },
+  "homepage": "https://github.com/agentic-indigo/indigo-slides-plugin",
+  "repository": "https://github.com/agentic-indigo/indigo-slides-plugin",
+  "plugins": [
+    {
+      "name": "indigo-slides",
+      "source": "./export/indigo-slides-plugin",
+      "description": "Genera presentazioni HTML in stile indigo.ai (Roobert + Suisse Intl + Slussen Mono). Pattern enterprise, customer theme, condivisione via link.",
+      "category": "productivity",
+      "tags": [
+        "presentations",
+        "slides",
+        "indigo",
+        "branded",
+        "design-system"
+      ]
+    }
+  ]
+}
