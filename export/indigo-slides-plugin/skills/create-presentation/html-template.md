@@ -195,7 +195,17 @@ Tutte le classi sotto sono definite in `themes/indigo/theme.css`. **Mai inventar
 `.pricing-row` `.pricing-name` `.pricing-value` `.pricing-unit`
 `.pricing-includes` (ul)
 `.addon-title` `.addon-table`
-`.pill-highlight` (+ `.pill-green` / `.pill-indigo` / `.pill-blue` / `.pill-amber`)
+`.pill-highlight` (+ modifier colore — **vedi regola sotto**)
+
+**Regola pill-highlight (IMPORTANTE):**
+| Modifier | Quando usarlo |
+|---|---|
+| `.pill-neutral` | **Default per disclaimer/note informative** ("Oltre 150K sessioni, tariffa scalare", "Validità offerta 30gg"). Grigio sobrio, non compete con l'accent. |
+| `.pill-indigo` | Highlight di un **dato chiave** ("Totale anno €132.000"). |
+| `.pill-green` | **SOLO risparmi/sconti reali** ("Sconto −22%", "−71% sul costo"). Mai per disclaimer. |
+| `.pill-blue` / `.pill-amber` | Casi rari, stati custom. |
+
+Mai mettere due pill colorate diverse (verde + viola) nella stessa slide: crea incoerenza. Disclaimer → sempre `pill-neutral`.
 `.cost-card` (variante minore per costo onboarding)
 `.cost-row` `.cost-amount` `.cost-note`
 

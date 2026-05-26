@@ -308,7 +308,7 @@ Stessa struttura di `text-and-chat` ma con `<img src="..." class="screenshot-fra
       <li>Voce e testo, integrazioni con i vostri sistemi</li>
       <li>Knowledge base, analytics, guardrails, audit trail</li>
     </ul>
-    <p class="pill-highlight pill-green">Oltre le <b>120.000 sessioni</b> incluse, le sessioni aggiuntive si pagano a <b>tariffa scalare</b> — più volumi, meno costo per sessione.</p>
+    <p class="pill-highlight pill-neutral">Oltre le <b>120.000 sessioni</b> incluse, le sessioni aggiuntive si pagano a <b>tariffa scalare</b> — più volumi, meno costo per sessione.</p>
   </div>
   <div class="addon-card">
     <p class="section-label">ADD-ON VOLUMI</p>
