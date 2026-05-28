@@ -164,6 +164,8 @@ Il `.hero-bg` applica automaticamente un overlay gradient nero→trasparente da 
 
 Variante alternativa con chat-mockup invece dei phone-mockup: usa `<div class="chat-mockup">` (vedi `html-template.md`). Chat-bubble user **sempre indigo**, mai customer brand.
 
+**Mockup generato:** se non hai uno screen da uploadare, generalo con `generate_image(technique="product-chat-generator")` e incolla l'`embed` (classe `gen-image-inline`, già **inline** e mostrato intero) nella colonna destra al posto del `<img>`. È esattamente questo pattern. Vedi `BRAND.md` § Immagini generate. NB: questa è un'immagine-mockup nella slide, **non** un widget live.
+
 **Anti-pattern:** mai più di 5 feature nella `feature-list`. Mai chat-mockup + phone-mockup nella stessa slide.
 
 ### 2D. `text-and-mockup` (testo + screenshot/dashboard)

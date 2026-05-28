@@ -212,6 +212,20 @@ Tutte le distanze interne usano la scala. Niente valori arbitrari.
 
 Vedi `theme.css` § `.hero-bg` per il gradient overlay.
 
+### Immagini generate (flora)
+
+Due tecniche, scelte con `technique` in `generate_image`. Entrambe ritornano **subito** `{id, status:"pending", embed}` (non bloccante): incolli l'`embed` nel `html_content` dove va l'immagine, il deck è già visibile con uno skeleton lì e l'immagine compare da sola in ~60-90s. **Non aspettare, non fare polling.** Solo proposte/pitch clienti, mai deck interni. Cap: max 8 generate per presentazione (`remaining_generations` nel ritorno). **Mai** per logo, grafici o dashboard (quelli restano `upload_asset` o pattern dedicati).
+
+**⚠️ Il posizionamento dipende dal tipo — regola rigida:**
+
+**1. `lifestyle-photos` — foto di persone/lifestyle** (cover, hero, divisori). Soggetti reali in contesto (professionisti, customer care, banking), candid, luce naturale.
+- **Posizionamento: SEMPRE full-bleed, oppure con dissolvenza/gradient sul background. MAI inline in un blocco.** L'`embed` ritornato usa già `gen-image gen-image-cover` (full-bleed): mettila come **prima** riga del `html_content`, poi il contenuto (`cover-content`, ecc.) sopra. Full-bleed + overlay di leggibilità sono nel CSS. (La `.hero-bg` con `background-image` vale solo per immagini **già caricate** via upload, non per le generate che partono `pending`.)
+
+**2. `product-chat-generator` — mockup UI di chat** (slide demo "l'assistente in azione", es. l'esperienza in app). Genera l'immagine di uno screen di conversazione.
+- **Posizionamento: SEMPRE inline, come immagine dentro la slide** (es. colonna destra di un `two-col`, o due mockup affiancati). **MAI come background full-bleed.** L'`embed` ritornato usa `gen-image gen-image-inline` (mostrata intera, non croppata): regola l'`aspect-ratio` sull'immagine.
+
+**Prompt:** per le foto, specifico su soggetto, setting, mood, luce (candid, luce naturale, professionisti reali, ambienti moderni); per i mockup, descrivi lo scenario/contenuto della chat. Evita posa da stock, watermark, soggetti generici.
+
 ### Logo cliente
 
 | Posizione | Crop | Aspect target |

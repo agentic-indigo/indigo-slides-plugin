@@ -195,7 +195,8 @@ Se l'utente vuole iterare ancora ("cambia la slide 5"), usa `update_slide` o `ad
 - `update_slide(presentation_id, slide_index, html_content?, variant?, notes?)` — modifica una slide (iterazioni)
 - `remove_slide(presentation_id, slide_index)` — rimuovi una slide
 - `move_slide(presentation_id, from_position, to_position)` — riordina
-- `upload_asset(presentation_id, filename, content_base64, kind)` — logo / hero image / mockup / screenshot
+- `upload_asset(presentation_id, filename, content_base64, kind)` — logo / hero image / mockup / screenshot (immagini fornite dall'utente)
+- `generate_image(presentation_id, prompt, technique?, kind?)` — genera un'immagine on-brand con flora.ai quando l'utente NON ne allega una. Due `technique`: `lifestyle-photos` (foto persone/lifestyle → **full-bleed o con fade**, mai inline) e `product-chat-generator` (mockup UI di chat → **inline** nella slide, mai background). Ritorna **subito** `{id, url, status:"pending", embed}`: incolla l'`embed` (già col placement giusto per tipo) nel `html_content`; il deck mostra uno skeleton e l'immagine compare da sola (~60-90s), senza attendere né polling. Cap per-presentazione. **Mai** per logo / grafici / dashboard. Vedi `BRAND.md` § Immagini generate.
 - `get_presentation(id)` — recupera stato corrente del deck
 - `list_presentations(search?)` — cerca pres esistenti
 - `get_theme_catalog(theme)` — catalog macchina-leggibile (fallback)
