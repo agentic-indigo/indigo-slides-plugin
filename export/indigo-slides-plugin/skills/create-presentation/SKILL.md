@@ -218,6 +218,8 @@ Prima di chiamare `create_presentation` o `add_slide`:
 - [ ] **Accent indigo `#6366F1`** su section-label, numerini step, metric chiave — anche su pres customer
 - [ ] **Un solo elemento metric con accent** indigo per slide
 - [ ] **`class="reveal"` su 3-5 elementi top-level** (per stagger animation)
+- [ ] **Icone: SOLO Lucide SVG inline (`stroke-width="1.5"`), MAI emoji** su slide customer-facing — incluse flow-icon, shield-icon, card-icon. Regola rigida, non saltarla.
+- [ ] **Mockup chat generato** → dentro `<div class="two-col mockup-right">`, titolo nella colonna sinistra (vedi `BRAND.md` § Immagini generate)
 - [ ] **Lingua dell'utente**
 
 Se anche uno solo fallisce: sistema prima del tool call.

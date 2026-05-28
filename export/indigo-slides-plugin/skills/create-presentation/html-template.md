@@ -154,7 +154,8 @@ Tutte le classi sotto sono definite in `themes/indigo/theme.css`. **Mai inventar
 `.ghost-text`
 
 ### Layout primari
-`.two-col` (+ `.narrow-right` / `.wide-left`)
+`.two-col` (+ `.narrow-right` / `.wide-left` / `.mockup-right`)
+`.two-col.mockup-right` — testo a sx (titolo incluso), mockup generato a dx in colonna fissa dimensionata; non impostare height/align a mano
 `.grid-2` `.grid-3` `.grid-4`
 `.flow-container` `.flow-step` `.flow-arrow` `.flow-icon`
 `.shield-grid` (+ `.shield-grid-3x2` per forzare 3 colonne)

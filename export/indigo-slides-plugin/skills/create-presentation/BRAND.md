@@ -222,9 +222,9 @@ Due tecniche, scelte con `technique` in `generate_image`. Entrambe ritornano **s
 - **Posizionamento: SEMPRE full-bleed, oppure con dissolvenza/gradient sul background. MAI inline in un blocco.** L'`embed` ritornato usa già `gen-image gen-image-cover` (full-bleed): mettila come **prima** riga del `html_content`, poi il contenuto (`cover-content`, ecc.) sopra. Full-bleed + overlay di leggibilità sono nel CSS. (La `.hero-bg` con `background-image` vale solo per immagini **già caricate** via upload, non per le generate che partono `pending`.)
 
 **2. `product-chat-generator` — mockup UI di chat** (slide demo "l'assistente in azione", es. l'esperienza in app). Genera l'immagine di uno screen di conversazione.
-- **Posizionamento: SEMPRE inline, come immagine dentro la slide** (es. colonna destra di un `two-col`, o due mockup affiancati). **MAI come background full-bleed.** L'`embed` ritornato usa `gen-image gen-image-inline` (mostrata intera, non croppata): regola l'`aspect-ratio` sull'immagine.
+- **Posizionamento: SEMPRE inline dentro la slide, MAI come background full-bleed.** Usa il wrapper dedicato `<div class="two-col mockup-right">`: colonna **sinistra** = il testo della slide (section-label + headline + body + feature-list), colonna **destra** = la `figure` del mockup. Il titolo va **dentro** la colonna sinistra (non sopra il `two-col`), così il mockup occupa tutta l'altezza ed è grande. La classe `mockup-right` dimensiona tutto: **non** impostare `height`/`align-items` a mano. L'`embed` ritornato usa `gen-image gen-image-inline` (mostrato intero, non croppato).
 
-**Prompt:** per le foto, specifico su soggetto, setting, mood, luce (candid, luce naturale, professionisti reali, ambienti moderni); per i mockup, descrivi lo scenario/contenuto della chat. Evita posa da stock, watermark, soggetti generici.
+**Prompt:** per le foto, specifico su soggetto, setting, mood, luce (candid, luce naturale, professionisti reali, ambienti moderni); per i mockup, descrivi lo scenario/contenuto della chat. Evita posa da stock, watermark, soggetti generici. (Le emoji eventualmente disegnate nel mockup vengono già soppresse lato generazione.)
 
 ### Logo cliente
 
