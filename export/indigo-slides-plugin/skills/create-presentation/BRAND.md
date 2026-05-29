@@ -32,7 +32,7 @@ Tre famiglie. Niente fallback `system-ui` come display, niente Inter/Roboto.
 | Token | Hex | Uso |
 |---|---|---|
 | `--c-black` | `#000` | Sfondo slide dark, testo su slide light |
-| `--c-white` | `#fff` | Testo su chat-bubble user, raramente come sfondo |
+| `--c-white` | `#fff` | Testo su sfondi scuri/dark, raramente come sfondo |
 | `--c-cream` | `#F5F1EB` | Testo su slide dark/themed |
 | `--c-warm-bg` | `#F9F8F5` | Sfondo slide light (warm cream, non bianco pieno) |
 | `--c-dark-bg` | `#111` | Sfondo flow-arrow / chrome details su dark |
@@ -46,7 +46,6 @@ Tre famiglie. Niente fallback `system-ui` come display, niente Inter/Roboto.
 - Numerini circle nei `numbered-vertical-steps` (1/2/3/4/5)
 - Metric value più importante della slide (sempre **una** per slide)
 - Highlight pill colorato in fondo a card (per "Sconto", "Scalabilità inclusa")
-- Chat-bubble.user background (NON il customer primary)
 - Flow-arrow color
 - Highlight-card-dark background `#1F1F3A` (indigo dark)
 
@@ -232,7 +231,6 @@ Due tecniche, scelte con `technique` in `generate_image`. Entrambe ritornano **s
 |---|---|---|
 | Cover (raro, solo se richiesto esplicito) | Preserva | 3:1 ≤ ratio ≤ 1:1 |
 | Case study card | Preserva o circle se quadrato | max-height 32px |
-| Chat-avatar | Crop circle | 1:1 |
 | Nel header | **MAI** — il header è chrome Indigo | — |
 
 ### Quando emoji vs Lucide vs logo cliente

@@ -75,9 +75,7 @@ Il pattern giusto è:
 | Elemento | Cap |
 |---|---|
 | Paragrafi colonna sinistra | 1 `body-large` + 1 `feature-list` (max 5 item) |
-| `chat-bubble` totali | **≤ 4** |
-| Caratteri per `chat-bubble` | ≤ 80 |
-| Chat-mockup per slide | 1 (mai 2) |
+| Mockup chat (destra) | 1 generato (`product-chat-generator`), mai 2 |
 
 ### `text-and-mockup` / `mockup-pair`
 | Elemento | Cap |

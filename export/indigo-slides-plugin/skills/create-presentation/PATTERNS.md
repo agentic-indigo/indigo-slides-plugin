@@ -140,7 +140,7 @@ Il `.hero-bg` applica automaticamente un overlay gradient nero→trasparente da 
 ### 2C. `text-and-chat` (esperienza voice/chat)
 
 **Variant:** `light`
-**Quando:** mostrare un caso d'uso conversazionale. Colonna sinistra spiega, destra fa vedere l'esperienza con chat-mockup.
+**Quando:** mostrare un caso d'uso conversazionale. Colonna sinistra spiega, destra fa vedere l'esperienza con un mockup della chat (generato) o screenshot d'app caricati.
 
 ```html
 <p class="section-label">L'ESPERIENZA IN-APP</p>
@@ -162,18 +162,16 @@ Il `.hero-bg` applica automaticamente un overlay gradient nero→trasparente da 
 </div>
 ```
 
-Variante alternativa con chat-mockup invece dei phone-mockup: usa `<div class="chat-mockup">` (vedi `html-template.md`). Chat-bubble user **sempre indigo**, mai customer brand.
+**Mockup della chat:** per mostrare una conversazione, generala con `generate_image(technique="product-chat-generator")`. **Mai costruirla in HTML a mano.** Usa il layout dedicato `<div class="two-col mockup-right">`: titolo + testo nella colonna sinistra, `embed` del mockup nella destra. La classe dimensiona il mockup da sola, non impostare `height`/`align-items`. Vedi `BRAND.md` § Immagini generate. NB: è un'immagine-mockup nella slide, **non** un widget live.
 
-**Mockup generato:** se non hai uno screen da uploadare, generalo con `generate_image(technique="product-chat-generator")`. Per questo caso usa il layout dedicato `<div class="two-col mockup-right">`: titolo + testo nella colonna sinistra, `embed` del mockup nella destra. La classe dimensiona il mockup da sola — non impostare `height`/`align-items`. Vedi `BRAND.md` § Immagini generate. NB: è un'immagine-mockup nella slide, **non** un widget live.
-
-**Anti-pattern:** mai più di 5 feature nella `feature-list`. Mai chat-mockup + phone-mockup nella stessa slide.
+**Anti-pattern:** mai più di 5 feature nella `feature-list`. Mai chat in HTML a mano (bolle in `<div>`): la chat è sempre un mockup generato. Mai mockup generato + phone-mockup caricati nella stessa slide.
 
 ### 2D. `text-and-mockup` (testo + screenshot/dashboard)
 
 **Variant:** `light` o `dark`
 **Quando:** quando hai 1 screenshot grande (dashboard, CRM, scheda lead). Colonna sinistra spiega, destra mostra.
 
-Stessa struttura di `text-and-chat` ma con `<img src="..." class="screenshot-frame">` invece del chat-mockup.
+Stessa struttura di `text-and-chat` ma con `<img src="..." class="screenshot-frame">` invece del mockup della chat.
 
 ---
 

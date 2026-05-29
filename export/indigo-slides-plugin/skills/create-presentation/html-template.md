@@ -186,7 +186,6 @@ Tutte le classi sotto sono definite in `themes/indigo/theme.css`. **Mai inventar
 `.step-body` (content next-to)
 
 ### Mockup
-`.chat-mockup` `.chat-header` `.chat-avatar` `.chat-body` `.chat-bubble` (+ `.user` / `.assistant`)
 `.mockup-pair` (flex row 2 phone)
 `.phone-mockup` (img phone screenshot)
 `.screenshot-frame` (img desktop screenshot con frame)
