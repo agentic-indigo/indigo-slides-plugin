@@ -166,6 +166,31 @@ Per ogni slide rimanente nell'outline:
 
 ---
 
+## Phase 3.5 — Self-review visivo (OBBLIGATORIA)
+
+Le regole in prosa non bastano: vanno **verificate guardando il risultato**. Dopo aver generato (o modificato) il deck, prima di consegnarlo:
+
+1. **Chiama `screenshot_presentation(presentation_id)`** → ricevi una JPEG per slide, in ordine. Le **guardi davvero**, una per una.
+2. **Confronta ogni slide con la rubrica** qui sotto.
+3. **Correggi le violazioni** con `update_slide` sulla slide colpevole.
+4. **Ri-chiama `screenshot_presentation`** e ricontrolla. Ripeti finché è pulito (**max 2 giri**; se dopo 2 giri resta un problema, dillo all'utente invece di nasconderlo).
+5. Solo a deck pulito → Phase 5.
+
+### Rubrica (controlla su OGNI slide)
+- **Niente emoji.** Icone solo Lucide SVG. Se vedi un'emoji (in una card, un flow, una lista) → sostituisci con Lucide.
+- **Header visibile.** Logo indigo, tagline e numero slide non devono essere coperti (tipico su cover con hero image full-bleed).
+- **Immagini ben dimensionate.** Non minuscole che galleggiano, non in overflow oltre i bordi. Mockup chat → dentro `two-col mockup-right`.
+- **Niente testo tagliato / overflow / gap anomali.** Il contenuto sta dentro la slide; niente buchi verticali enormi tra titolo e body.
+- **Accent indigo** su section-label, numerini, metric chiave (anche nei deck customer).
+- **Themed solo mid-deck.** Mai cover/closing themed. Max 2 themed, mai consecutive, mai prima della slide 4.
+- **Customer brand solo come sfondo themed**, non sugli accent.
+
+> Placeholder grigio = immagine ancora in generazione (~60-90s): è normale, giudica **box e posizione**, non il contenuto. Se serve vedere l'immagine finita, ri-screenshotta dopo qualche secondo.
+
+Questo passo è ciò che impedisce il ripetersi degli errori: **non fidarti del tuo HTML, guarda la slide.**
+
+---
+
 ## Phase 4 — PPT conversion
 
 > **NOTA**: Phase 4 è coperta dalla issue WP4 (AGE-90). Quando arriverà, qui ci sarà il flusso `extract-pptx.py` → mapping a pattern → upload assets → create_presentation.
@@ -176,7 +201,7 @@ Per ora, se l'utente allega un `.pptx`, scusati e proponi di ricreare manualment
 
 ## Phase 5 — Delivery
 
-Quando il deck è completo:
+Quando il deck è completo **e la Phase 3.5 (self-review visivo) è passata**:
 
 1. Verifica con `get_presentation(id)` che tutte le slide siano state caricate.
 2. Comunica all'utente:
@@ -197,6 +222,7 @@ Se l'utente vuole iterare ancora ("cambia la slide 5"), usa `update_slide` o `ad
 - `move_slide(presentation_id, from_position, to_position)` — riordina
 - `upload_asset(presentation_id, filename, content_base64, kind)` — logo / hero image / mockup / screenshot (immagini fornite dall'utente)
 - `generate_image(presentation_id, prompt, technique?, kind?)` — genera un'immagine on-brand con flora.ai quando l'utente NON ne allega una. Due `technique`: `lifestyle-photos` (foto persone/lifestyle → **full-bleed o con fade**, mai inline) e `product-chat-generator` (mockup UI di chat → **inline** nella slide, mai background). Ritorna **subito** `{id, url, status:"pending", embed}`: incolla l'`embed` (già col placement giusto per tipo) nel `html_content`; il deck mostra uno skeleton e l'immagine compare da sola (~60-90s), senza attendere né polling. Cap per-presentazione. **Mai** per logo / grafici / dashboard. Vedi `BRAND.md` § Immagini generate.
+- `screenshot_presentation(presentation_id, slide_index?)` — **Phase 3.5**: ritorna una JPEG per slide (inline) per la self-review visiva. Guarda le slide, correggi con `update_slide`, ripeti. Obbligatorio prima della delivery.
 - `get_presentation(id)` — recupera stato corrente del deck
 - `list_presentations(search?)` — cerca pres esistenti
 - `get_theme_catalog(theme)` — catalog macchina-leggibile (fallback)
