@@ -55,11 +55,15 @@ Obiettivo: partire a costruire il prima possibile. **Inferisci dal brief, non in
 
 ### Quando chiedere (adattivo, non a numero fisso)
 - **Brief completo** → non chiedere niente. Dichiara in 1 riga cosa hai capito ("Deck commerciale per X, ~12 slide, brandizzato Y, audience CTO") e **costruisci**.
-- **Brief incompleto in punti che cambiano il deck** → fai **solo** le domande che colmano quei buchi, **batchate in un solo `AskUserQuestion`** (più domande nello stesso blocco, scelta multipla dove possibile). Buco vero = non capisci se commerciale/operativo; deck cliente ma brand non inferibile; taglio/lunghezza aperti che cambiano la struttura.
+- **Brief incompleto in punti che cambiano il deck** → fai **solo** le domande che colmano quei buchi, **batchate in un solo `AskUserQuestion`** (più domande nello stesso blocco, scelta multipla dove possibile). Buco vero = non capisci se commerciale/operativo; deck cliente ma brand non inferibile; il brief vuole case study/clienti reali ma non dice quali (non inventarli); taglio/lunghezza aperti che cambiano la struttura.
 - **Mai** chiedere ciò che è inferibile o già nel brief. **Mai un form di domande di rito.** Per utenti non tecnici: poche, chiare, niente hex se il brand è inferibile.
 
 ### Raccolta materiale (limitata)
-Se servono fatti (metriche cliente, case study), usa il deck di riferimento e ciò che sai. Verifica **solo** i numeri che finiranno nelle slide, in fretta. Non trasformare la creazione in una sessione di ricerca: poche verifiche mirate, poi costruisci.
+Due tipi di fatti, regole diverse:
+- **Numeri/metriche** da mettere in slide: usa ciò che sai e il deck di riferimento, verifica **solo** quelli e in fretta. Non trasformare la creazione in una sessione di ricerca.
+- **Clienti reali da citare come case study**: **non inventarli mai.** Se sono nel brief o li conosci con certezza (es. HYPE/Santander nel banking), usali. Se dovresti indovinare chi citare (settore che non conosci), **chiedi**: "quali clienti vuoi citare come riferimento?" — una domanda secca, non una ricerca.
+
+**Mai interrogare la codebase per i fatti clienti/business.** Un tool tipo `ask_codebase` indicizza il **codice** (architettura, feature, integrazioni), non la mappa clienti-per-settore: non saprà dirti "che clienti energy abbiamo", e ha un timeout ~60s che ti blocca a vuoto. La lista clienti vive nel brief o dall'utente — chiedi a lui.
 
 ### Brand cliente → `customer_theme`
 Solo se commerciale per un cliente. Costruisci:
