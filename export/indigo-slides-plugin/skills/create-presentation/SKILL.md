@@ -42,49 +42,35 @@ Per ora se l'utente menziona un ID o un PPT, scusati e segui Mode A creando una 
 
 ---
 
-## Phase 1 — Content discovery
+## Phase 1 — Capisci, poi decidi
 
-Raccogli tutto in **un solo `AskUserQuestion`** (multi-question bundle).
+Obiettivo: partire a costruire il prima possibile. **Inferisci dal brief, non interrogare.** Meno cerimonie.
 
-Domande da bundlare:
+### Cosa ti serve (inferisci se è già chiaro)
+- **Tipo di deck** — decide tutto il resto:
+  - **Commerciale** (proposta/pitch a cliente o prospect): narrativo, persuasivo, usa immagini, può avere 1-2 slide `themed` col brand cliente. Distribuzione variant: ~60% dark, ~30% light, ≤2 themed.
+  - **Operativo** (interno: recap, analisi, dati per Solutions): denso di dati — tabelle, metriche. **Niente foto, niente themed.** ~60-70% light.
+- **Cliente + brand** (solo se commerciale per un cliente): nome + colori. Il brand di un'azienda nota spesso lo conosci (es. Reale Mutua = rosso): usalo e **dichiaralo** invece di chiederlo.
+- **Audience, lunghezza, contenuti chiave**: di solito impliciti nel brief.
 
-1. **Argomento** (header `Topic`): cosa è la pres + obiettivo (es. "proposta voice AI per Revolut", "recap Q1 2026 per il team product").
-2. **Tipo di deck** (header `Type`): scelte preimpostate — questa determina la **distribuzione variant** (vedi `BRAND.md`):
-   - *Proposta commerciale customer* → 60-65% dark, 25-30% light, 5-10% themed (max 2 slide)
-   - *Pitch tecnico interno* → 70% dark, 30% light, 0% themed
-   - *Recap interno / team update* → 60-70% light, 30-40% dark, 0% themed
-   - *Quick demo* (5-6 slide) → 80% dark, 20% light, 0% themed
-3. **Cliente specifico?** (header `Brand`): *Sì, deck per cliente* (apre branch customer_theme + abilita section-divider themed) / *No, brand Indigo* (default, niente themed).
-4. **Lunghezza** (header `Slides`): *Short 5–8* / *Medium 10–15* (recommended per proposte) / *Long 15+*.
+### Quando chiedere (adattivo, non a numero fisso)
+- **Brief completo** → non chiedere niente. Dichiara in 1 riga cosa hai capito ("Deck commerciale per X, ~12 slide, brandizzato Y, audience CTO") e **costruisci**.
+- **Brief incompleto in punti che cambiano il deck** → fai **solo** le domande che colmano quei buchi, **batchate in un solo `AskUserQuestion`** (più domande nello stesso blocco, scelta multipla dove possibile). Buco vero = non capisci se commerciale/operativo; deck cliente ma brand non inferibile; taglio/lunghezza aperti che cambiano la struttura.
+- **Mai** chiedere ciò che è inferibile o già nel brief. **Mai un form di domande di rito.** Per utenti non tecnici: poche, chiare, niente hex se il brand è inferibile.
 
-Se l'utente menziona già queste info nel prompt iniziale ("proposta per Revolut, 12 slide"), **non chiedere di nuovo** ciò che è già esplicito.
+### Raccolta materiale (limitata)
+Se servono fatti (metriche cliente, case study), usa il deck di riferimento e ciò che sai. Verifica **solo** i numeri che finiranno nelle slide, in fretta. Non trasformare la creazione in una sessione di ricerca: poche verifiche mirate, poi costruisci.
 
-### Branch customer_theme
-
-Solo se l'utente ha scelto "Sì, deck per cliente" o cita un cliente esplicitamente:
-
-1. Chiedi in **una sola domanda concisa**:
-   > "Per il brand: passami il colore primario (hex), la tinta chiara per gli sfondi (hex), e se hai un logo (o foto hero per la cover) allegalo qui."
-
-2. Se l'utente allega un logo o una foto hero, chiama subito `upload_asset` (richiede `presentation_id` — se la pres non esiste ancora, crea prima la pres con un titolo placeholder, poi upload, poi update slides).
-
-3. Costruisci `customer_theme`:
-   ```json
-   {
-     "clientName": "Crédit Agricole",
-     "primary": "#00753E",
-     "primaryLight": "#D4ECDE",
-     "gradient": "linear-gradient(135deg, #00753E 0%, #004F2A 100%)",
-     "logoUrl": "<URL dell'asset>"
-   }
-   ```
-   `gradient` opzionale (vedi `BRAND.md`).
-
-**Cruciale:** il `customer_theme` abilita le slide `themed` ma **non cambia l'accent operativo**. L'accent indigo `#6366F1` resta sui section-label, sui numerini step, sulle metric value. Il customer brand vive **solo come gradient di sfondo** sulle 1-2 section-divider mid-deck (vedi `BRAND.md`).
+### Brand cliente → `customer_theme`
+Solo se commerciale per un cliente. Costruisci:
+```json
+{ "clientName": "Reale Mutua", "primary": "#C8102E", "primaryLight": "#FBE2E5",
+  "gradient": "linear-gradient(135deg, #C8102E 0%, #8F0B20 100%)", "logoUrl": "<da upload_asset, opz>" }
+```
+Se l'utente allega un logo/foto, `upload_asset` (serve `presentation_id` → crea prima con titolo placeholder se necessario). **Il `customer_theme` abilita le slide `themed` ma NON cambia l'accent**: indigo `#6366F1` resta su section-label, numerini, metric; il brand cliente vive solo come gradient di sfondo sulle 1-2 themed mid-deck.
 
 ### Lingua
-
-Scrivi le slide nella lingua dell'utente. Se parla italiano, le slide sono in italiano. Eccezione: contenuto tecnico per audience internazionale resta in inglese.
+Slide nella lingua dell'utente (IT → slide in IT). Eccezione: contenuto tecnico per audience internazionale resta in inglese.
 
 ---
 
@@ -125,48 +111,37 @@ Per deck più corti (6-8 slide), comprimi mantenendo gli elementi essenziali: co
 
 Decidi qui anche **quale slide ha l'accent metric indigo** — una sola per deck, di solito su `results-dashboard` o `pricing-detail` per evidenziare il numero chiave.
 
----
+### Decisione immagini (auto)
+Decidi qui se e dove generare immagini, in base al tipo:
+- **Commerciale**: **1 cover hero** (`lifestyle-photos`, full-bleed) quasi sempre. Oltre la cover, una foto solo se una slide è divisore/contesto e il deck non è già denso. Un **mockup chat** (`product-chat-generator`, inline) sulla slide demo "assistente in azione", se prevista. **Mai** foto su slide con dati/tabelle/metriche. Mai troppe (≈1-3 in tutto il deck).
+- **Operativo**: **zero immagini**, salvo richiesta esplicita.
+- **Sempre** quando l'utente chiede esplicitamente un'immagine, a prescindere dal tipo.
 
-## Phase 2.5 — Preview & approval
-
-> **NOTA**: Phase 2.5 sarà espansa nella issue WP2 (AGE-88). Per ora il flusso è preview-light, da arricchire dopo.
-
-Invece di generare tutto il deck in un colpo:
-
-1. Genera **solo cover + 1 slide hero** (es. `cover-dark-hero` + `intro-context-stories` o + `highlight-insight`). Sono le due che definiscono il "look" del deck.
-2. Chiama `create_presentation` con queste 2 slide.
-3. Comunica all'utente il link di visualizzazione: *"Ecco le prime 2 slide qui: {url}. Procedo con il resto del deck?"*
-4. Se l'utente chiede modifiche: iterazione tramite `update_slide` (mai rifare tutta la pres).
-5. Quando l'utente approva, estendi il deck con `add_slide` per le slide successive (in ordine, inserendole nelle posizioni giuste — ricorda che le slide preview occupano posizione 0 e 1, e le aggiunte poi shiftano).
-
-**Mai** generare tutte le slide e committare in unico tool call senza preview.
+Vedi `BRAND.md` § Immagini generate per il posizionamento per tipo.
 
 ---
 
-## Phase 3 — Generate full deck
+## Phase 3 — Costruisci in un colpo
 
-Per ogni slide rimanente nell'outline:
+Niente checkpoint a metà: costruisci il deck **intero**, poi la self-review (Phase 4), poi mostri.
 
-1. **Apri `PATTERNS.md`**, trova il pattern, copia il template HTML.
-2. **Adatta i contenuti** alla variant + lingua + brand cliente se attivo.
-3. **Controlla `DENSITY_RULES.md`**: la slide è **stratificata** (label+headline+body+evidence+footnote)? I cap del pattern sono rispettati? Se no, splitta o trim.
-4. **Aggiungi `class="reveal"`** agli elementi top-level che vuoi animare con stagger (vedi `animation-patterns.md`). Massimo 5 reveal per slide.
-5. **Controlla `html-template.md`**: niente `<section>` né `<div class="slide">` nel tuo `html_content`, niente classi inventate, niente colori hex hardcodati.
-6. **Chiama `add_slide`** con `presentation_id` esistente, posizione `n`, variant scelta, html_content.
+1. **Genera prima le immagini** decise in Phase 2 (`generate_image`): tornano **subito** come `embed` (pending), non bloccano. Per il mockup usa `two-col mockup-right` (vedi `BRAND.md`).
+2. **Componi tutte le slide** seguendo `PATTERNS.md` (pattern + template), `DENSITY_RULES.md` (stratifica label→headline→body→evidence, cap rispettati), `html-template.md` (solo classi del theme; niente `<section>`/`<div class="slide">`/header tag; colori via CSS var). `class="reveal"` su 3-5 elementi top-level per slide. Inserisci gli `embed` immagine nelle slide giuste.
+3. **Una sola `create_presentation`** con l'intero array di slide (cover + tutte). **Niente** create + N×`add_slide`: è la fonte principale di lentezza e rumore.
+
+`add_slide` / `update_slide` / `move_slide` / `remove_slide` servono **dopo**, per le iterazioni puntuali — non per la build iniziale.
 
 **Errori comuni da evitare:**
-- Headline `headline-huge` su slide content (riservato a cover + section-divider + closing) → usa `headline-big`.
-- Section-label senza `class="section-label"` o senza UPPERCASE → la skill genererà casing sbagliato.
-- Accent customer al posto di indigo sui numerini step / metric → sempre indigo `#6366F1`.
-- 3 card piccole in `grid-3` invece di 2 card grandi → preferisci 2 card grandi (`case-study-grid`, `two-col + highlight-card-dark`).
-- Logo cliente nel header → mai, il header è chrome Indigo.
-- Slide content senza `class="reveal"` su nessun elemento → animation non triggered.
-- Più di 2 slide `themed` → riduci.
-- Themed in posizione 1, 2 o ultima → cambia variant.
+- `headline-huge` su slide content (riservato a cover/divider/closing) → usa `headline-big`.
+- Accent customer al posto di indigo su numerini/metric → sempre indigo `#6366F1`.
+- 3 card piccole in `grid-3` invece di 2 grandi → preferisci 2 card grandi.
+- Logo cliente nel header → mai (header = chrome Indigo).
+- Emoji come **icone/label UI** → usa Lucide. (Le emoji come **messaggio di chat** dentro un mockup vanno bene.)
+- Più di 2 themed, o themed in posizione 1/2/ultima → correggi.
 
 ---
 
-## Phase 3.5 — Self-review visivo (OBBLIGATORIA)
+## Phase 4 — Self-review visivo (OBBLIGATORIA)
 
 Le regole in prosa non bastano: vanno **verificate guardando il risultato**. Dopo aver generato (o modificato) il deck, prima di consegnarlo:
 
@@ -177,7 +152,7 @@ Le regole in prosa non bastano: vanno **verificate guardando il risultato**. Dop
 5. Solo a deck pulito → Phase 5.
 
 ### Rubrica (controlla su OGNI slide)
-- **Niente emoji.** Icone solo Lucide SVG. Se vedi un'emoji (in una card, un flow, una lista) → sostituisci con Lucide.
+- **Niente emoji come icone/label UI.** Icone solo Lucide SVG: se vedi un'emoji come icona (in una card, un flow, una lista, una shield) → sostituisci con Lucide. (Eccezione: le emoji come **messaggio di chat** dentro un mockup conversazionale vanno bene — sono contenuto, non chrome.)
 - **Header visibile.** Logo indigo, tagline e numero slide non devono essere coperti (tipico su cover con hero image full-bleed).
 - **Immagini ben dimensionate.** Non minuscole che galleggiano, non in overflow oltre i bordi. Mockup chat → dentro `two-col mockup-right`.
 - **Niente testo tagliato / overflow / gap anomali.** Il contenuto sta dentro la slide; niente buchi verticali enormi tra titolo e body.
@@ -191,23 +166,22 @@ Questo passo è ciò che impedisce il ripetersi degli errori: **non fidarti del 
 
 ---
 
-## Phase 4 — PPT conversion
+## Conversione PPT (futuro)
 
-> **NOTA**: Phase 4 è coperta dalla issue WP4 (AGE-90). Quando arriverà, qui ci sarà il flusso `extract-pptx.py` → mapping a pattern → upload assets → create_presentation.
+> Coperta dalla issue WP4 (AGE-90). Quando arriverà: `extract-pptx.py` → mapping a pattern → upload assets → create_presentation.
 
-Per ora, se l'utente allega un `.pptx`, scusati e proponi di ricreare manualmente il deck a partire da brief testuale (Phase 1).
+Per ora, se l'utente allega un `.pptx`, scusati e proponi di ricreare il deck a partire dal brief testuale (Phase 1).
 
 ---
 
 ## Phase 5 — Delivery
 
-Quando il deck è completo **e la Phase 3.5 (self-review visivo) è passata**:
+Quando il deck è completo **e la Phase 4 (self-review visivo) è passata**:
 
-1. Verifica con `get_presentation(id)` che tutte le slide siano state caricate.
-2. Comunica all'utente:
-   - **Link visualizzazione**: `{url}` — scroll-snap navigation con frecce/spazio/touch.
+1. Comunica all'utente, in breve:
+   - **Link visualizzazione**: `{url}` — navigazione con frecce/spazio/touch.
    - **Link editor**: `{editUrl}` — per modifiche visuali.
-3. Sintesi breve: "Deck di N slide, M con customer brand themed (slide X e Y), pattern usati: [...]"
+2. Una riga di sintesi: "Deck di N slide, M themed col brand X, [1-liner sul taglio]". Niente play-by-play delle singole slide.
 
 Se l'utente vuole iterare ancora ("cambia la slide 5"), usa `update_slide` o `add_slide` / `remove_slide` / `move_slide` su quella specifica posizione — mai ricreare l'intera pres.
 
@@ -215,14 +189,14 @@ Se l'utente vuole iterare ancora ("cambia la slide 5"), usa `update_slide` o `ad
 
 ## Tool MCP disponibili
 
-- `create_presentation(title, theme, customer_theme?, slides[])` — crea pres + slide iniziali (Phase 2.5 / 3)
-- `add_slide(presentation_id, position, html_content, variant, notes?)` — aggiunge una slide (Phase 3)
+- `create_presentation(title, theme, customer_theme?, slides[])` — **Phase 3**: crea l'intero deck in un colpo (tutte le slide nell'array `slides[]`). È la chiamata principale di build.
+- `add_slide(presentation_id, position, html_content, variant, notes?)` — aggiunge una slide (solo iterazioni post-build)
 - `update_slide(presentation_id, slide_index, html_content?, variant?, notes?)` — modifica una slide (iterazioni)
 - `remove_slide(presentation_id, slide_index)` — rimuovi una slide
 - `move_slide(presentation_id, from_position, to_position)` — riordina
 - `upload_asset(presentation_id, filename, content_base64, kind)` — logo / hero image / mockup / screenshot (immagini fornite dall'utente)
 - `generate_image(presentation_id, prompt, technique?, kind?)` — genera un'immagine on-brand con flora.ai quando l'utente NON ne allega una. Due `technique`: `lifestyle-photos` (foto persone/lifestyle → **full-bleed o con fade**, mai inline) e `product-chat-generator` (mockup UI di chat → **inline** nella slide, mai background). Ritorna **subito** `{id, url, status:"pending", embed}`: incolla l'`embed` (già col placement giusto per tipo) nel `html_content`; il deck mostra uno skeleton e l'immagine compare da sola (~60-90s), senza attendere né polling. Cap per-presentazione. **Mai** per logo / grafici / dashboard. Vedi `BRAND.md` § Immagini generate.
-- `screenshot_presentation(presentation_id, slide_index?)` — **Phase 3.5**: ritorna una JPEG per slide (inline) per la self-review visiva. Guarda le slide, correggi con `update_slide`, ripeti. Obbligatorio prima della delivery.
+- `screenshot_presentation(presentation_id, slide_index?)` — **Phase 4**: ritorna una JPEG per slide (inline) per la self-review visiva. Guarda le slide, correggi con `update_slide`, ripeti. Obbligatorio prima della delivery.
 - `get_presentation(id)` — recupera stato corrente del deck
 - `list_presentations(search?)` — cerca pres esistenti
 - `get_theme_catalog(theme)` — catalog macchina-leggibile (fallback)
