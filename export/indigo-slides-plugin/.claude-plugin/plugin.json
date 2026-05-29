@@ -1,10 +1,10 @@
 {
   "name": "indigo-slides",
   "description": "Create and manage professional presentations with AI. Generate slides using the Indigo design system, edit them visually, and share via link.",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "author": {
     "name": "indigo.ai"
   },
-  "homepage": "https://indigo-slides.fly.dev",
+  "homepage": "https://slides.agentic.indigo.ai",
   "repository": "https://github.com/agentic-indigo/indigo-slides-plugin"
 }

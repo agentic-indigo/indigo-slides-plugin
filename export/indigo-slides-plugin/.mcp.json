@@ -2,7 +2,7 @@
   "mcpServers": {
     "indigo-slides": {
       "type": "http",
-      "url": "https://indigo-slides.fly.dev/api/mcp"
+      "url": "https://slides.agentic.indigo.ai/api/mcp"
     }
   }
 }

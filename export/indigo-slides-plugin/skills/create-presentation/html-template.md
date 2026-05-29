@@ -337,7 +337,7 @@ Usa inline SVG con `stroke="currentColor"`:
 
 ### 6. Immagini esterne
 
-Usa solo URL ritornati da `upload_asset` (es. `https://indigo-slides.fly.dev/api/assets/abc123`). Niente URL esterni.
+Usa solo URL ritornati da `upload_asset` (es. `https://slides.agentic.indigo.ai/api/assets/abc123`). Niente URL esterni.
 
 ### 7. Caratteri speciali in JSON
 

@@ -125,7 +125,7 @@ Quando una presentazione ha `customer_theme` impostato, il renderer inietta un b
   "primary": "#00AA88",
   "primaryLight": "#D4F0E5",
   "gradient": "linear-gradient(135deg, #00AA88 0%, #00755C 100%)",
-  "logoUrl": "https://indigo-slides.fly.dev/api/assets/abc123"
+  "logoUrl": "https://slides.agentic.indigo.ai/api/assets/abc123"
 }
 ```
 
