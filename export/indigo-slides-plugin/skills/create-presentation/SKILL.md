@@ -8,7 +8,7 @@ user_invocable: true
 
 Crei presentazioni HTML professionali nel design system **Indigo** (Roobert + Suisse Intl + Slussen Mono, palette brand) e le carichi su indigo-slides via MCP, ritornando link di visualizzazione e di edit.
 
-Lavori per **flusso a fasi**, non a colpo solo. Mostri qualcosa di concreto prima di committarti su tutto il deck. Riproduci la **stratificazione densa** del deck Credit Agricole di riferimento (vedi `PATTERNS.md`): label + headline + body + 1-2 card grandi + footnote.
+Lavori per **flusso a fasi**, non a colpo solo. Concordi la **scaletta** con l'utente prima di generare tutto il deck. Riproduci la **stratificazione densa** del deck Credit Agricole di riferimento (vedi `PATTERNS.md`): label + headline + body + 1-2 card grandi + footnote.
 
 ---
 
@@ -78,9 +78,12 @@ Slide nella lingua dell'utente (IT → slide in IT). Eccezione: contenuto tecnic
 
 ---
 
-## Phase 2 — Outline strategico
+## Phase 2 — Scaletta, poi approvazione
 
-Prima di generare HTML, butta giù un outline testuale veloce: **pattern + variant + 1-liner di contenuto per ogni slide**.
+Prima di generare HTML, definisci la scaletta e **falla approvare dall'utente**. Due passi:
+
+1. **Outline interno (per te):** pattern + variant + 1-liner di contenuto per ogni slide. È il tuo piano di build, non lo mostri così com'è.
+2. **Scaletta per l'utente (gate):** la presenti in chiaro e **aspetti l'ok prima di generare** (vedi "Scaletta da approvare" sotto).
 
 Esempio canonico per proposta commerciale 14 slide (dal reference Credit Agricole):
 
@@ -123,11 +126,32 @@ Decidi qui se e dove generare immagini, in base al tipo:
 
 Vedi `BRAND.md` § Immagini generate per il posizionamento per tipo.
 
+### Scaletta da approvare (gate prima di generare)
+Per un **deck nuovo** (da ~3-4 slide in su), prima di chiamare `create_presentation` mostra la scaletta all'utente e **aspetta l'ok**.
+
+- **Formato leggibile**, non il tuo outline tecnico: una riga per slide, `N. Titolo: cosa contiene in una frase`. **Niente gergo** (no nomi-pattern, no variant, no nomi-classe): l'utente è spesso non-tecnico.
+- Chiudi con una domanda secca: "Ti torna questa scaletta o cambio qualcosa?"
+- L'utente **edita a parole** ("togli la slide pricing", "aggiungi un caso cliente energy", "inverti 4 e 5"): aggiorni la scaletta e **riconfermi**, senza generare.
+- Solo sull'ok espandi in HTML (Phase 3). **Non generare il deck prima dell'approvazione.**
+
+**Salta il gate** (genera diretto) quando l'utente chiede **una sola slide**, o un **edit di un deck già esistente** (lì usi `update_slide`/`add_slide`, non rifai la scaletta).
+
+Esempio di scaletta mostrata all'utente:
+```
+1. Cover: "L'assistente AI nell'area clienti di Sorgenia"
+2. Il contesto: perché le richieste sulle bollette intasano il call center
+3. La soluzione: un assistente in-app che legge bolletta e consumi
+4. Come funziona: esempio "perché la bolletta di marzo è più alta?"
+5. Azioni in chat: autolettura e domiciliazione senza moduli
+6. Risultati attesi: meno carico sul call center, risposte in tempo reale
+7. Chiusura: prossimi passi
+```
+
 ---
 
 ## Phase 3 — Costruisci in un colpo
 
-Niente checkpoint a metà: costruisci il deck **intero**, poi la self-review (Phase 4), poi mostri.
+**Solo dopo l'ok sulla scaletta (Phase 2).** Niente checkpoint a metà: costruisci il deck **intero**, poi la self-review (Phase 4), poi mostri.
 
 1. **Genera prima le immagini** decise in Phase 2 (`generate_image`): tornano **subito** come `embed` (pending), non bloccano. Per il mockup usa `two-col mockup-right` (vedi `BRAND.md`).
 2. **Componi tutte le slide** seguendo `PATTERNS.md` (pattern + template), `DENSITY_RULES.md` (stratifica label→headline→body→evidence, cap rispettati), `html-template.md` (solo classi del theme; niente `<section>`/`<div class="slide">`/header tag; colori via CSS var). `class="reveal"` su 3-5 elementi top-level per slide. Inserisci gli `embed` immagine nelle slide giuste.
@@ -212,6 +236,7 @@ Se l'utente vuole iterare ancora ("cambia la slide 5"), usa `update_slide` o `ad
 
 Prima di chiamare `create_presentation` o `add_slide`:
 
+- [ ] **Scaletta approvata** dall'utente (deck nuovo; skip se 1 slide singola o edit di deck esistente)
 - [ ] **Pattern scelto** dal `PATTERNS.md` (no invenzione)
 - [ ] **Variant coerente** col pattern e l'ordering (cover = dark, themed solo mid-deck, closing = dark)
 - [ ] **Stratificazione**: la slide ha label → headline → body → evidence → (footnote) o equivalente?

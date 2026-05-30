@@ -1,7 +1,7 @@
 {
   "name": "indigo-slides",
   "description": "Create and manage professional presentations with AI. Generate slides using the Indigo design system, edit them visually, and share via link.",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "author": {
     "name": "indigo.ai"
   },
